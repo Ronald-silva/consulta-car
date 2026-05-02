@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-canvas: #ecf4f2;
+  --color-surface: #ffffff;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-subtle: #94a3b8;
+  --color-brand: #0d9488;
+  --color-brand-emphasis: #0f766e;
+  --color-brand-soft: #ccfbf1;
+  --color-danger: #e11d48;
+  --color-danger-soft: #ffe4e9;
+}
+
+html.dark {
+  --color-canvas: #0f172a;
+  --color-surface: #1e293b;
+  --color-ink: #f1f5f9;
+  --color-muted: #94a3b8;
+  --color-subtle: #64748b;
+  --color-brand: #14b8a6;
+  --color-brand-emphasis: #2dd4bf;
+  --color-brand-soft: #134e4a;
+  --color-danger: #fb7185;
+  --color-danger-soft: #451a2e;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply font-sans antialiased text-ink;
+    background: linear-gradient(165deg, var(--color-canvas) 0%, #f1f5f9 42%, #e8f5f3 100%);
+    min-height: 100dvh;
+  }
+
+  html.dark body {
+    background: linear-gradient(165deg, #0f172a 0%, #1e293b 45%, #172554 100%);
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  /* Evita cor/fundo de “botão do sistema” no :active (Linux/GTK/Chromium) que some com o fundo da marca */
+  button {
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+}
+
+/*
+ * Espaço reservado para a barra fixa no mobile (abas + rodapé da marca + safe area).
+ * 5.5rem era pouco e o conteúdo ficava por baixo da nav.
+ */
+:root {
+  --app-mobile-nav-spacer: calc(9.25rem + env(safe-area-inset-bottom, 0px));
+}
+
+.pb-safe-nav {
+  padding-bottom: var(--app-mobile-nav-spacer);
+}
+
+@media (min-width: 768px) {
+  .pb-safe-nav {
+    padding-bottom: 2rem;
+  }
+}
