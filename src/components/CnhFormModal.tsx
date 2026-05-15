@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { CNH } from '../types';
+import { DocumentPhotoScan } from './DocumentPhotoScan';
 import { digitsOnly, formatCpfDisplay, formatCpfInput, isValidCpf } from '../utils/format';
 
 type Props = {
@@ -87,6 +88,17 @@ export function CnhFormModal({ open, initial, onClose, onSave }: Props) {
         <h3 id="cnh-modal-title" className="text-xl md:text-2xl font-bold text-ink mb-6 pr-10">
           {initial ? 'Editar CNH' : 'Dados da CNH'}
         </h3>
+
+        <div className="mb-5">
+          <DocumentPhotoScan
+            mode="cnh"
+            onFill={(d) => {
+              if (d.name) setName(d.name);
+              if (d.number) setNumber(d.number.trim());
+              if (d.cpf) setCpfDisplay(formatCpfDisplay(d.cpf));
+            }}
+          />
+        </div>
 
         <form onSubmit={submit} className="space-y-5">
           <div className="flex flex-col gap-2">

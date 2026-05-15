@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { Vehicle } from '../types';
+import { DocumentPhotoScan } from './DocumentPhotoScan';
 import {
   formatPlateDisplay,
   isValidPlate,
@@ -119,6 +120,19 @@ export function VehicleFormModal({ open, initial, onClose, onSave }: Props) {
         <h3 id="vehicle-modal-title" className="text-xl md:text-2xl font-bold text-ink mb-6 pr-10">
           {initial ? 'Editar veículo' : 'Novo veículo'}
         </h3>
+
+        <div className="mb-5">
+          <DocumentPhotoScan
+            mode="vehicle"
+            onFill={(d) => {
+              if (d.plate) setPlate(formatPlateDisplay(d.plate));
+              if (d.renavam) setRenavam(normalizeRenavam(d.renavam));
+              if (d.chassis) setChassis(normalizeChassis(d.chassis));
+              if (d.brandModel) setBrandModel(d.brandModel);
+              if (d.year) setYear(normalizeYear(d.year));
+            }}
+          />
+        </div>
 
         <form onSubmit={submit} className="space-y-5">
           <Field label="Apelido (ex.: Meu carro)">
